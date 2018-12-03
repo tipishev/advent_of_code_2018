@@ -12,9 +12,9 @@ def get_claimed_squares(claim):
 #  claim = {'offset': (3, 2), 'size': (5, 4)}
 
 
-def run():
-    #  with open('input') as f:
-    with open('input_small') as f:
+def part1():
+    with open('input') as f:
+    #  with open('input_small') as f:
         lines = f.readlines()
 
     claims_counter = Counter()
@@ -29,10 +29,10 @@ def run():
         claim = {'offset': offset, 'size': size}
         claims[claim_id] = claim
         claimed_squares = get_claimed_squares(claim)
-        print(claimed_squares)
-        claims_counter.update(claims_counter)
+        claims_counter.update(claimed_squares)
 
-    print(len([square for square, count in claims_counter if count > 1]))
+    print(len([square for square, count
+               in claims_counter.items() if count > 1]))
 
 
-run()
+part1()
