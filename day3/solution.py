@@ -14,7 +14,7 @@ def get_claimed_squares(claim):
 
 def part1():
     with open('input') as f:
-    #  with open('input_small') as f:
+        #  with open('input_small') as f:
         lines = f.readlines()
 
     claims_counter = Counter()
@@ -35,4 +35,36 @@ def part1():
                in claims_counter.items() if count > 1]))
 
 
-part1()
+def part2():
+    with open('input') as f:
+    #  with open('input_small') as f:
+        lines = f.readlines()
+    squares = {(x, y): set() for x in range(1000) for y in range(1000)}
+    #  squares = {(x, y): set() for x in range(7) for y in range(7)}
+    claims = {}
+    for line in lines:
+        line = line.strip()
+        tokens = line.split()
+        claim_id, _, offset, size = tokens
+
+        claim_id = int(claim_id[1:])
+        offset = tuple(map(int, offset[:-1].split(',')))
+        size = tuple(map(int, size.split('x')))
+        claim = {'offset': offset, 'size': size}
+        claimed_squares = get_claimed_squares(claim)
+        claims[claim_id] = claimed_squares
+        for square in claimed_squares:
+            squares[square].add(claim_id)
+    #  print(claims)
+    #  print('___')
+    #  print(squares)
+    for claim_id, claimed_squares in claims.items():
+        print(f'trying claim #{claim_id}')
+        for claimed_square in claimed_squares:
+            if len(squares[claimed_square]) != 1:
+                break
+        else:
+            print(claim_id)
+
+
+part2()
